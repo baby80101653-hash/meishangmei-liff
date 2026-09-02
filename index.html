@@ -2,155 +2,647 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="theme-color" content="#073b6f">
+
   <title>美上鎂員工身分驗證</title>
+
   <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:#f4f7fa;color:#16324a;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif}
-    .page{min-height:100vh;display:flex;justify-content:center;padding:22px 15px 40px}
-    .card{width:100%;max-width:430px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 30px rgba(7,59,111,.10)}
-    .header{background:#073b6f;padding:28px 22px 25px;text-align:center;color:#fff}
-    .logo{font-size:48px;line-height:1;font-weight:900;font-style:italic;letter-spacing:-5px;margin-bottom:12px}
-    .company{font-size:18px;font-weight:800}
-    .company-en{margin-top:5px;color:#d8e5f1;font-size:11px}
-    .body{padding:25px 22px 28px}
-    h1{margin:0;text-align:center;color:#073b6f;font-size:24px;font-weight:800}
-    .subtitle{margin:8px 0 20px;text-align:center;color:#748494;font-size:14px;line-height:1.7}
-    .status{margin-bottom:20px;padding:12px 14px;border-radius:10px;background:#f2f6f9;color:#66798a;font-size:13px;line-height:1.65;text-align:center}
-    .status.success{background:#edf9f3;border:1px solid #c0e6d2;color:#087a58;font-weight:700}
-    .status.error{background:#fff1f1;border:1px solid #efc3c3;color:#b52424}
-    .field{margin-bottom:18px}
-    label{display:block;margin-bottom:7px;color:#314b62;font-size:14px;font-weight:700}
-    input{width:100%;height:52px;padding:0 14px;border:1px solid #ccd7e0;border-radius:10px;outline:none;color:#16324a;font-size:17px;background:#fff}
-    #employeeId{text-transform:uppercase}
-    button{width:100%;height:54px;border:0;border-radius:11px;background:#087f78;color:#fff;font-size:17px;font-weight:800}
-    button:disabled{background:#aab8c3}
-    .notice{margin-top:18px;padding:12px 14px;border-radius:9px;background:#f3f7fa;color:#6f7f8e;font-size:12px;line-height:1.7}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f7fa;
+      color: #16324a;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans TC",
+        Arial,
+        sans-serif;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 22px 15px 40px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(7, 59, 111, 0.10);
+    }
+
+    .header {
+      background: #073b6f;
+      padding: 28px 22px 25px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .logo {
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -5px;
+      margin-bottom: 12px;
+    }
+
+    .company {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .company-en {
+      margin-top: 5px;
+      color: #d8e5f1;
+      font-size: 11px;
+    }
+
+    .body {
+      padding: 25px 22px 28px;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      color: #073b6f;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin: 8px 0 20px;
+      text-align: center;
+      color: #748494;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .status {
+      margin-bottom: 20px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f2f6f9;
+      color: #66798a;
+      font-size: 13px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .status.success {
+      background: #edf9f3;
+      border: 1px solid #c0e6d2;
+      color: #087a58;
+      font-weight: 700;
+    }
+
+    .status.error {
+      background: #fff1f1;
+      border: 1px solid #efc3c3;
+      color: #b52424;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #314b62;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      height: 52px;
+      padding: 0 14px;
+      border: 1px solid #ccd7e0;
+      border-radius: 10px;
+      outline: none;
+      color: #16324a;
+      font-size: 17px;
+      background: #ffffff;
+    }
+
+    input:focus {
+      border-color: #087f78;
+      box-shadow: 0 0 0 3px rgba(8, 127, 120, 0.08);
+    }
+
+    #employeeId {
+      text-transform: uppercase;
+    }
+
+    button {
+      width: 100%;
+      height: 54px;
+      border: 0;
+      border-radius: 11px;
+      background: #087f78;
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #aab8c3;
+      cursor: default;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 9px;
+      background: #f3f7fa;
+      color: #6f7f8e;
+      font-size: 12px;
+      line-height: 1.7;
+    }
   </style>
 </head>
+
 <body>
+
 <div class="page">
+
   <div class="card">
+
+    <!-- =========================
+         公司標題
+    ========================== -->
+
     <div class="header">
-      <div class="logo">P/T</div>
-      <div class="company">美上鎂科技股份有限公司</div>
-      <div class="company-en">Techplasma Technology Co., Ltd</div>
+
+      <div class="logo">
+        P/T
+      </div>
+
+      <div class="company">
+        美上鎂科技股份有限公司
+      </div>
+
+      <div class="company-en">
+        Techplasma Technology Co., Ltd
+      </div>
+
     </div>
 
+
+    <!-- =========================
+         驗證內容
+    ========================== -->
+
     <div class="body">
-      <h1>員工身分驗證</h1>
+
+      <h1>
+        員工身分驗證
+      </h1>
+
       <div class="subtitle">
         首次使用請完成員工資料驗證<br>
         驗證成功後即可使用員工福利服務
       </div>
 
-      <div id="status" class="status">正在連線 LINE...</div>
 
-      <form id="verifyForm" method="post" action="https://script.google.com/macros/s/AKfycbwlJV-3Cto9dvnFJsTEni5f2MC5ofsQ-xV3593-fgSfoux55AGkspFdnAmW7oef_HS7PEA/exec">
-        <input type="hidden" name="action" value="liffVerify">
-        <input type="hidden" id="idToken" name="idToken" value="">
+      <!-- LINE 狀態 -->
+
+      <div
+        id="status"
+        class="status">
+        正在連線 LINE...
+      </div>
+
+
+      <!-- =========================
+           員工驗證表單
+      ========================== -->
+
+      <form
+        id="verifyForm"
+        method="post"
+        action="https://script.google.com/macros/s/AKfycbwUY-3Cto9dvnFJsTEni5f2MC5ofsQ-xV3593-fgSfoux55AGkspFdnAmW7oef_HS7PEA/exec">
+
+        <!-- 告訴 Apps Script 這是 LIFF 驗證 -->
+
+        <input
+          type="hidden"
+          name="action"
+          value="liffVerify">
+
+
+        <!-- LINE ID Token -->
+
+        <input
+          type="hidden"
+          id="idToken"
+          name="idToken"
+          value="">
+
+
+        <!-- 員工編號 -->
 
         <div class="field">
-          <label for="employeeId">員工編號</label>
-          <input id="employeeId" name="employeeId" placeholder="例如：A01001" autocomplete="off" required>
+
+          <label for="employeeId">
+            員工編號
+          </label>
+
+          <input
+            id="employeeId"
+            name="employeeId"
+            type="text"
+            placeholder="例如：A01001"
+            autocomplete="off"
+            autocapitalize="characters"
+            required>
+
         </div>
+
+
+        <!-- 姓名 -->
 
         <div class="field">
-          <label for="employeeName">姓名</label>
-          <input id="employeeName" name="employeeName" placeholder="例如：美上鎂" autocomplete="off" required>
+
+          <label for="employeeName">
+            姓名
+          </label>
+
+          <input
+            id="employeeName"
+            name="employeeName"
+            type="text"
+            placeholder="例如：美上鎂"
+            autocomplete="off"
+            required>
+
         </div>
 
-        <button id="verifyButton" type="submit" disabled>
+
+        <!-- 驗證按鈕 -->
+
+        <button
+          id="verifyButton"
+          type="submit"
+          disabled>
+
           LINE 身分確認中...
+
         </button>
+
       </form>
 
+
+      <!-- 說明 -->
+
       <div class="notice">
+
         🔒 本頁面僅用於美上鎂員工身分確認及 LINE 帳號綁定。
-        LINE 身分會由 LINE 登入憑證進行驗證，員工資料將與公司員工名冊核對。
+        LINE 身分會由 LINE 登入憑證進行驗證，
+        員工資料將與公司員工名冊核對。
+
       </div>
+
     </div>
+
   </div>
+
 </div>
 
-<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-<script>
-const LIFF_ID = "2011388395-xENMZYMD";
 
-const statusEl = document.getElementById("status");
-const verifyButton = document.getElementById("verifyButton");
-const idTokenInput = document.getElementById("idToken");
-const verifyForm = document.getElementById("verifyForm");
+<!-- =============================
+     LINE LIFF SDK
+============================== -->
+
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+
+<script>
+
+/* =====================================================
+   LIFF 基本設定
+===================================================== */
+
+const LIFF_ID =
+  "2011388395-xENMZYMD";
+
+
+/* =====================================================
+   元件
+===================================================== */
+
+const statusEl =
+  document.getElementById("status");
+
+const verifyButton =
+  document.getElementById("verifyButton");
+
+const idTokenInput =
+  document.getElementById("idToken");
+
+const verifyForm =
+  document.getElementById("verifyForm");
+
+const employeeIdInput =
+  document.getElementById("employeeId");
+
+const employeeNameInput =
+  document.getElementById("employeeName");
+
+
+/* =====================================================
+   顯示狀態
+===================================================== */
 
 function setStatus(message, type) {
+
   statusEl.textContent = message;
-  statusEl.className = "status" + (type ? " " + type : "");
+
+  statusEl.className =
+    "status" +
+    (type ? " " + type : "");
+
 }
+
+
+/* =====================================================
+   員工編號自動轉大寫
+===================================================== */
+
+employeeIdInput.addEventListener(
+  "input",
+  function () {
+
+    this.value =
+      this.value.toUpperCase();
+
+  }
+);
+
+
+/* =====================================================
+   LIFF 初始化
+===================================================== */
 
 async function initializeLiff() {
+
   try {
+
+    /* -------------------------
+       確認 LIFF SDK
+    -------------------------- */
+
     if (typeof liff === "undefined") {
-      throw new Error("LIFF SDK 載入失敗");
+
+      throw new Error(
+        "LIFF SDK 載入失敗"
+      );
+
     }
 
-    setStatus("正在連線 LINE...", "");
 
-    await liff.init({ liffId: LIFF_ID });
+    setStatus(
+      "正在連線 LINE...",
+      ""
+    );
+
+
+    /* -------------------------
+       初始化 LIFF
+    -------------------------- */
+
+    await liff.init({
+      liffId: LIFF_ID
+    });
+
+
+    /* -------------------------
+       尚未登入 LINE
+    -------------------------- */
 
     if (!liff.isLoggedIn()) {
-      setStatus("正在登入 LINE...", "");
+
+      setStatus(
+        "正在登入 LINE...",
+        ""
+      );
+
       liff.login();
+
       return;
+
     }
 
-    const idToken = liff.getIDToken();
+
+    /* -------------------------
+       取得 ID Token
+    -------------------------- */
+
+    const idToken =
+      liff.getIDToken();
+
 
     if (!idToken) {
-      throw new Error("無法取得 LINE 登入憑證");
+
+      throw new Error(
+        "無法取得 LINE 登入憑證"
+      );
+
     }
 
-    const profile = await liff.getProfile();
 
-    idTokenInput.value = idToken;
+    /* -------------------------
+       取得 LINE Profile
+    -------------------------- */
+
+    const profile =
+      await liff.getProfile();
+
+
+    /* -------------------------
+       儲存 Token
+    -------------------------- */
+
+    idTokenInput.value =
+      idToken;
+
+
+    /* -------------------------
+       顯示 LINE 使用者
+    -------------------------- */
 
     setStatus(
+
       "✓ LINE 身分確認完成" +
-      (profile && profile.displayName ? "｜" + profile.displayName : ""),
+
+      (
+        profile &&
+        profile.displayName
+
+          ? "｜" +
+            profile.displayName
+
+          : ""
+      ),
+
       "success"
+
     );
 
-    verifyButton.disabled = false;
-    verifyButton.textContent = "確認驗證";
+
+    /* -------------------------
+       開放驗證按鈕
+    -------------------------- */
+
+    verifyButton.disabled =
+      false;
+
+    verifyButton.textContent =
+      "確認驗證";
+
 
   } catch (error) {
-    console.error("LIFF ERROR", error);
-    setStatus(
-      "✕ LINE 身分確認失敗：" +
-      (error && error.message ? error.message : "未知錯誤"),
-      "error"
+
+    console.error(
+      "LIFF ERROR",
+      error
     );
-    verifyButton.disabled = true;
-    verifyButton.textContent = "目前無法驗證";
+
+
+    setStatus(
+
+      "✕ LINE 身分確認失敗：" +
+
+      (
+        error &&
+        error.message
+
+          ? error.message
+
+          : "未知錯誤"
+      ),
+
+      "error"
+
+    );
+
+
+    verifyButton.disabled =
+      true;
+
+    verifyButton.textContent =
+      "目前無法驗證";
+
   }
+
 }
 
-verifyForm.addEventListener("submit", function(event) {
-  const employeeId = document.getElementById("employeeId").value.trim();
-  const employeeName = document.getElementById("employeeName").value.trim();
 
-  if (!employeeId || !employeeName || !idTokenInput.value) {
-    event.preventDefault();
-    setStatus("請確認員工編號、姓名及 LINE 身分均已完成。", "error");
-    return;
+/* =====================================================
+   表單送出前檢查
+===================================================== */
+
+verifyForm.addEventListener(
+  "submit",
+  function (event) {
+
+    const employeeId =
+      employeeIdInput.value
+        .trim()
+        .toUpperCase();
+
+    const employeeName =
+      employeeNameInput.value
+        .trim();
+
+
+    /* -------------------------
+       回寫整理後的資料
+    -------------------------- */
+
+    employeeIdInput.value =
+      employeeId;
+
+    employeeNameInput.value =
+      employeeName;
+
+
+    /* -------------------------
+       基本檢查
+    -------------------------- */
+
+    if (
+      !employeeId ||
+      !employeeName ||
+      !idTokenInput.value
+    ) {
+
+      event.preventDefault();
+
+
+      setStatus(
+        "請確認員工編號、姓名及 LINE 身分均已完成。",
+        "error"
+      );
+
+
+      return;
+
+    }
+
+
+    /* -------------------------
+       防止重複點擊
+    -------------------------- */
+
+    verifyButton.disabled =
+      true;
+
+    verifyButton.textContent =
+      "驗證中...";
+
+
+    setStatus(
+      "正在核對員工資料...",
+      ""
+    );
+
+
+    /*
+      注意：
+      這裡「不使用 event.preventDefault()」
+
+      因此瀏覽器會正常使用 POST
+      將表單送往 Apps Script Web App。
+    */
+
   }
+);
 
-  verifyButton.disabled = true;
-  verifyButton.textContent = "驗證中...";
-  setStatus("正在核對員工資料...", "");
-});
 
-window.addEventListener("load", initializeLiff);
+/* =====================================================
+   頁面載入
+===================================================== */
+
+window.addEventListener(
+  "load",
+  initializeLiff
+);
+
 </script>
+
 </body>
 </html>
