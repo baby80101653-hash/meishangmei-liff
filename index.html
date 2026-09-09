@@ -408,153 +408,101 @@ async function initializeLiff() {
 
   try {
 
-    /* -------------------------
-       確認 LIFF SDK
-    -------------------------- */
-
     if (typeof liff === "undefined") {
-
-      throw new Error(
-        "LIFF SDK 載入失敗"
-      );
-
+      throw new Error("LIFF SDK 載入失敗");
     }
 
-
-    setStatus(
-      "正在連線 LINE...",
-      ""
-    );
-
-
-    /* -------------------------
-       初始化 LIFF
-    -------------------------- */
+    setStatus("正在連線 LINE...", "");
 
     await liff.init({
       liffId: LIFF_ID
     });
 
-
-    /* -------------------------
-       尚未登入 LINE
-    -------------------------- */
-
     if (!liff.isLoggedIn()) {
+      setStatus("正在登入 LINE...", "");
+      liff.login();
+      return;
+    }
+
+    const idToken = liff.getIDToken();
+
+    if (!idToken) {
+      throw new Error("無法取得 LINE 登入憑證");
+    }
+
+    // 判斷是否為中秋座位表模式
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page") || "";
+
+    if (page === "seat") {
 
       setStatus(
-        "正在登入 LINE...",
+        "正在驗證員工身分並載入座位表...",
         ""
       );
 
-      liff.login();
+      // 座位表模式不顯示一般員工驗證表單
+      verifyForm.style.display = "none";
 
+      // 將 LINE ID Token POST 至 Apps Script 後端驗證
+      const seatForm = document.createElement("form");
+      seatForm.method = "POST";
+      seatForm.action =
+        "https://script.google.com/macros/s/AKfycbwUY-3Cto9dvnFJsTEni5f2MC5ofsQ-xV3593-fgSfoux55AGkspFdnAmW7oef_HS7PEA/exec";
+
+      const actionInput = document.createElement("input");
+      actionInput.type = "hidden";
+      actionInput.name = "action";
+      actionInput.value = "getMidAutumnSeat";
+
+      const tokenInput = document.createElement("input");
+      tokenInput.type = "hidden";
+      tokenInput.name = "idToken";
+      tokenInput.value = idToken;
+
+      seatForm.appendChild(actionInput);
+      seatForm.appendChild(tokenInput);
+      document.body.appendChild(seatForm);
+
+      seatForm.submit();
       return;
-
     }
 
+    // 一般員工身分驗證模式
+    const profile = await liff.getProfile();
 
-    /* -------------------------
-       取得 ID Token
-    -------------------------- */
-
-    const idToken =
-      liff.getIDToken();
-
-
-    if (!idToken) {
-
-      throw new Error(
-        "無法取得 LINE 登入憑證"
-      );
-
-    }
-
-
-    /* -------------------------
-       取得 LINE Profile
-    -------------------------- */
-
-    const profile =
-      await liff.getProfile();
-
-
-    /* -------------------------
-       儲存 Token
-    -------------------------- */
-
-    idTokenInput.value =
-      idToken;
-
-
-    /* -------------------------
-       顯示 LINE 使用者
-    -------------------------- */
+    idTokenInput.value = idToken;
 
     setStatus(
-
       "✓ LINE 身分確認完成" +
-
       (
-        profile &&
-        profile.displayName
-
-          ? "｜" +
-            profile.displayName
-
+        profile && profile.displayName
+          ? "｜" + profile.displayName
           : ""
       ),
-
       "success"
-
     );
 
-
-    /* -------------------------
-       開放驗證按鈕
-    -------------------------- */
-
-    verifyButton.disabled =
-      false;
-
-    verifyButton.textContent =
-      "確認驗證";
-
+    verifyButton.disabled = false;
+    verifyButton.textContent = "確認驗證";
 
   } catch (error) {
 
-    console.error(
-      "LIFF ERROR",
-      error
-    );
-
+    console.error("LIFF ERROR", error);
 
     setStatus(
-
       "✕ LINE 身分確認失敗：" +
-
       (
-        error &&
-        error.message
-
+        error && error.message
           ? error.message
-
           : "未知錯誤"
       ),
-
       "error"
-
     );
 
-
-    verifyButton.disabled =
-      true;
-
-    verifyButton.textContent =
-      "目前無法驗證";
-
+    verifyButton.disabled = true;
+    verifyButton.textContent = "目前無法驗證";
   }
-
 }
 
 
